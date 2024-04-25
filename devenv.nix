@@ -18,6 +18,21 @@ let
   packages = [
     pkgs.git
     xdgappdirs
+
+    pkgs.rsync
+    pkgs.wget
+    pkgs.doxygen
+    pkgs.graphviz
+    pkgs.cppcheck
+    pkgs.boost
+    pkgs.openssl
+    pkgs.sqlite
+    #pkgs.sqlitecpp #?
+    pkgs.curl
+    #rfkill
+    #pkgs.libcap
+    pkgs.libpcap
+    pkgs.libevent
   ];
 
   enterShell = ''

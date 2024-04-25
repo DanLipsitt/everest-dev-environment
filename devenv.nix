@@ -6,10 +6,10 @@ let
 
     pname = "xdgappdirs";
     version = "1.4.5";
+      format = "wheel";
 
     src = pkgs.fetchPypi {
-      inherit pname version;
-      format = "wheel";
+      inherit pname version format;
       # python = "py2.py3";
       # dist = python;
       # platform = "any";

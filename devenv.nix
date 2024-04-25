@@ -50,7 +50,18 @@ let
   '';
 
   # https://devenv.sh/languages/
-  languages.python.enable = true;
+  languages.python = {
+    enable = true;
+    venv = {
+      enable = true;
+      requirements = (
+        "./dependency_manager\n" +
+        "./workspace/everest-utils/ev-dev-tools\n" +
+        lib.readFile ./workspace/Josev/requirements.txt +
+        lib.readFile dependency_manager/requirements.txt
+      );
+    };
+  };
   languages.cplusplus.enable = true;
   languages.javascript.enable = true;
   languages.java = {

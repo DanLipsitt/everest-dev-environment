@@ -52,6 +52,11 @@ let
   # https://devenv.sh/languages/
   languages.python.enable = true;
   languages.cplusplus.enable = true;
+  languages.javascript.enable = true;
+  languages.java = {
+    enable = true;
+    jdk.package = pkgs.openjdk;
+  };
 
   # https://devenv.sh/pre-commit-hooks/
   # pre-commit.hooks.shellcheck.enable = true;

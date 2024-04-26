@@ -27,10 +27,9 @@ let
     pkgs.boost
     pkgs.openssl
     pkgs.sqlite
-    #pkgs.sqlitecpp #?
     pkgs.curl
-    #rfkill
-    #pkgs.libcap
+    pkgs.rfkill
+    pkgs.libcap
     pkgs.libpcap
     pkgs.libevent
   ];

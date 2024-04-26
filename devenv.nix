@@ -28,10 +28,10 @@ let
     pkgs.openssl
     pkgs.sqlite
     pkgs.curl
-    pkgs.rfkill
-    pkgs.libcap
     pkgs.libpcap
     pkgs.libevent
+  ] ++ lib.optionals pkgs.stdenv.isLinux [
+    pkgs.libcap
   ];
 
   enterShell = ''

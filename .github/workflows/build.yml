@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     defaults:
       run:
-        shell: devenv shell bash -e {0}
+        shell: devenv shell bash -- -e {0}
     env:
       workspace: workspace
     steps:

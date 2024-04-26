@@ -4,6 +4,9 @@ on:
   pull_request:
   push:
 
+env:
+  workspace: "workspace"
+
 jobs:
   tests:
     strategy:
@@ -13,8 +16,6 @@ jobs:
     defaults:
       run:
         shell: devenv shell bash -- -e {0}
-    env:
-      workspace: workspace
     steps:
     - uses: actions/checkout@v4
     - uses: nixbuild/nix-quick-install-action@v27
@@ -26,12 +27,12 @@ jobs:
       shell: bash
 
     - name: Set up workspace
-      run: edm init --workspace {workspace}
+      run: edm init --workspace ${workspace}
 
     - name: Run the build
       shell: devenv shell bash -e {0}
       run: |
-        mkdir {workspace}/build
-        cd {workspace}/build
+        mkdir ${workspace}/build
+        cd ${workspace}/build
         cmake ..
         make install

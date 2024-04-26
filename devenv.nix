@@ -31,13 +31,14 @@ let
     pkgs.libpcap
     pkgs.libevent
   ] ++ lib.optionals pkgs.stdenv.isLinux [
+    pkgs.util-linux
     pkgs.libcap
   ];
 
   enterShell = ''
     # set CPM_SOURCE_CACHE using the xdgappdirs python package if not set
     if [ -z ''${CPM_SOURCE_CACHE} ]; then
-      CPM_SOURCE_CACHE=$(python -c 'import xdgappdirs; print(xdgappdirs.user_cache_dir())')
+      CPM_SOURCE_CACHE=$(python -c 'import xdgappdirs; print(xdgappdirs.user_cache_dir("cpm_source_cache"))')
     fi
     export CPM_SOURCE_CACHE
   '';

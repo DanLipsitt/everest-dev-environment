@@ -17,7 +17,7 @@ jobs:
       workspace: workspace
     steps:
     - uses: actions/checkout@v4
-    - uses: cachix/install-nix-action@v26
+    - uses: nixbuild/nix-quick-install-action@v27
     - uses: cachix/cachix-action@v14
       with:
         name: devenv

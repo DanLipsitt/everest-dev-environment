@@ -5,7 +5,7 @@ on:
   push:
 
 env:
-  workspace: "workspace"
+  WORKSPACE: "workspace"
   CPM_SOURCE_CACHE: "cpm_source_cache"
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: |
-          $CPM_SOURCE_CACHE
+          ${{ env.CPM_SOURCE_CACHE }}
         key:
           ${{ runner.os }}-cpm
     - name: Install devenv.sh
@@ -57,7 +57,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: |
-          $workspace
+          ${{ env.WORKSPACE }}
         key:
           ${{ runner.os }}-workspace-${{ hashFiles('${workspace}/workspace-config.yaml') }}
 

@@ -2,9 +2,9 @@
 
 let
   initial-requirements = builtins.replaceStrings ["\n"] [" "] ''
-    -e ./workspace/everest-utils/ev-dev-tools
+    -e ''${WORKSPACE}/everest-utils/ev-dev-tools
     -e ./dependency_manager
-    -r ./workspace/Josev/requirements.txt
+    -r ''${WORKSPACE}/Josev/requirements.txt
   '';
 in {
   env = {};
@@ -34,8 +34,8 @@ in {
       description = "Initialize workspace";
       exec = ''
         pip install -e ./dependency_manager
-        edm init --workspace workspace
-        mkdir workspace/everest-core/build || true
+        edm init --workspace ''${WORKSPACE}
+        mkdir ''${WORKSPACE}/everest-core/build || true
       '';
     };
     init-deps = {

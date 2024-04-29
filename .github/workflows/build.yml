@@ -27,12 +27,10 @@ jobs:
       shell: bash
 
     - name: Set up workspace
-      run: edm init --workspace ${workspace}
+      run: |
+        init-workspace
+        init-deps
 
     - name: Run the build
       shell: devenv shell bash -e {0}
-      run: |
-        mkdir ${workspace}/build
-        cd ${workspace}/build
-        cmake ..
-        make install
+      run: build

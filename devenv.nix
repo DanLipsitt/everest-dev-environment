@@ -1,23 +1,18 @@
 { pkgs, lib, config, inputs, ... }:
 
 let
-  xdgappdirs = pkgs.python311Packages.buildPythonPackage rec {
-    pname = "xdgappdirs";
-    version = "1.4.5";
-    format = "wheel";
-    src = pkgs.fetchPypi {
-      inherit pname version format;
-      sha256 = "sha256-j6S0cwSd5brdMdyYhhzxavbP8oG1F46ZdVVivLXwzYg=";
-    };
-  };
-  in
-{
+  requirements = ''
+    -e ./workspace/everest-utils/ev-dev-tools
+    -e ./dependency_manager
+    -r dependency_manager/requirements.txt
+    -r ./workspace/Josev/requirements.txt
+  '';
+in {
   env = {};
 
   # https://devenv.sh/packages/
   packages = [
     pkgs.git
-    xdgappdirs
 
     pkgs.rsync
     pkgs.wget
@@ -35,7 +30,20 @@ let
     pkgs.libcap
   ];
 
+  scripts = {
+    init-workspace = {
+      description = "Initialize workspace";
+      exec = ''
+        edm init --workspace workspace
+        pip install -r <(echo "${requirements}")
+      '';
+    };
+  };
+
   enterShell = ''
+    if [ ! -d workspace ]; then
+      workspace-init
+    fi
     # set CPM_SOURCE_CACHE using the xdgappdirs python package if not set
     if [ -z ''${CPM_SOURCE_CACHE} ]; then
       CPM_SOURCE_CACHE=$(python -c 'import xdgappdirs; print(xdgappdirs.user_cache_dir("cpm_source_cache"))')
@@ -54,12 +62,9 @@ let
     enable = true;
     venv = {
       enable = true;
-      requirements = (
-        "./dependency_manager\n" +
-        "./workspace/everest-utils/ev-dev-tools\n" +
-        lib.readFile ./workspace/Josev/requirements.txt +
-        lib.readFile dependency_manager/requirements.txt
-      );
+      requirements = ''
+        xdgappdirs
+      '';
     };
   };
   languages.cplusplus.enable = true;

@@ -24,6 +24,9 @@ jobs:
       with:
         name: devenv
     - uses: DeterminateSystems/magic-nix-cache-action@v4
+    - name: Get number of CPU cores
+      uses: SimenB/github-actions-cpu-cores@v2
+      id: cpu-count
     - name: Cache venv
       id: cache-venv
       uses: actions/cache@v4
@@ -59,4 +62,6 @@ jobs:
           ${{ runner.os }}-workspace-${{ hashFiles('${workspace}/workspace-config.yaml') }}
 
     - name: Run the build
+      env:
+        NCPU: ${{ steps.cpu-count.outputs.count }}
       run: build

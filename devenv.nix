@@ -46,7 +46,8 @@ in {
     build = {
       exec = ''
         cd workspace/everest-core/build
-        cmake ..
+        # Build on multiple cores if NCPU is set. Otherwise set it to 1.
+        cmake -j''${NCPU:-1} ..
         make install
       '';
     };

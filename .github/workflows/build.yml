@@ -32,5 +32,4 @@ jobs:
         init-deps
 
     - name: Run the build
-      shell: devenv shell bash -e {0}
       run: build

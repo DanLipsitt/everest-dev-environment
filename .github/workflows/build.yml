@@ -47,11 +47,6 @@ jobs:
       run: nix profile install nixpkgs#devenv
       shell: bash
 
-    - name: Set up workspace
-      run: |
-        init-workspace
-        init-deps
-
     - name: Cache workspace
       id: cache-workspace
       uses: actions/cache@v4
@@ -60,6 +55,11 @@ jobs:
           ${{ env.WORKSPACE }}
         key:
           ${{ runner.os }}-workspace-${{ hashFiles('${workspace}/workspace-config.yaml') }}
+
+    - name: Set up workspace
+      run: |
+        init-workspace
+        init-deps
 
     - name: Run the build
       env:

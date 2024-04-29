@@ -6,6 +6,7 @@ on:
 
 env:
   workspace: "workspace"
+  CPM_SOURCE_CACHE: "cpm_source_cache"
 
 jobs:
   tests:
@@ -23,7 +24,22 @@ jobs:
       with:
         name: devenv
     - uses: DeterminateSystems/magic-nix-cache-action@v4
-
+    - name: Cache venv
+      id: cache-venv
+      uses: actions/cache@v4
+      with:
+        path: |
+          ./venv
+        key:
+          ${{ runner.os }}-venv-${{ hashFiles('**/requirements.txt') }}
+    - name: Cache CPM Source
+      id: cache-cpm
+      uses: actions/cache@v4
+      with:
+        path: |
+          $CPM_SOURCE_CACHE
+        key:
+          ${{ runner.os }}-cpm
     - name: Install devenv.sh
       run: nix profile install nixpkgs#devenv
       shell: bash

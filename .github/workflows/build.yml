@@ -49,5 +49,14 @@ jobs:
         init-workspace
         init-deps
 
+    - name: Cache workspace
+      id: cache-workspace
+      uses: actions/cache@v4
+      with:
+        path: |
+          $workspace
+        key:
+          ${{ runner.os }}-workspace-${{ hashFiles('${workspace}/workspace-config.yaml') }}
+
     - name: Run the build
       run: build

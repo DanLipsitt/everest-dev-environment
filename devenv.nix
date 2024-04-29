@@ -33,13 +33,21 @@ in {
     init-workspace = {
       description = "Initialize workspace";
       exec = ''
-        pip install -e .
+        pip install -e ./dependency_manager
         edm init --workspace workspace
+        mkdir workspace/build
       '';
     };
     init-deps = {
       exec = ''
         pip install ${initial-requirements}
+      '';
+    };
+    build = {
+      exec = ''
+        cd workspace/build
+        cmake ..
+        make install
       '';
     };
   };

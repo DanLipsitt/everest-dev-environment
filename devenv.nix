@@ -35,7 +35,6 @@ in {
       exec = ''
         pip install -e ./dependency_manager
         edm init --workspace workspace
-        mkdir workspace/build
       '';
     };
     init-deps = {

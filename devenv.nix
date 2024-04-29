@@ -45,20 +45,21 @@ in {
     };
     build = {
       exec = ''
-        cd workspace/everest-core/build
+        cd ''${WORKSPACE}/everest-core/build
         # Build on multiple cores if NCPU is set. Otherwise set it to 1.
-        cmake -j''${NCPU:-1} ..
+        cmake -j''${NCPU:=1} ..
         make install
       '';
     };
   };
 
   enterShell = ''
+    export WORKSPACE=''${WORKSPACE:=workspace}
     # set CPM_SOURCE_CACHE using the xdgappdirs python package if not set
     if [ -z ''${CPM_SOURCE_CACHE} ]; then
       export CPM_SOURCE_CACHE=$(python -c 'import xdgappdirs; print(xdgappdirs.user_cache_dir("cpm_source_cache"))')
     fi
-    if [ ! -d workspace ]; then
+    if [ ! -d ''${WORKSPACE} ]; then
       init-workspace
       init-deps
     fi

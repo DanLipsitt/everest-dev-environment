@@ -1,10 +1,9 @@
 { pkgs, lib, config, inputs, ... }:
 
 let
-  requirements = ''
+  initial-requirements = builtins.replaceStrings ["\n"] [" "] ''
     -e ./workspace/everest-utils/ev-dev-tools
     -e ./dependency_manager
-    -r dependency_manager/requirements.txt
     -r ./workspace/Josev/requirements.txt
   '';
 in {
@@ -35,14 +34,19 @@ in {
       description = "Initialize workspace";
       exec = ''
         edm init --workspace workspace
-        pip install -r <(echo "${requirements}")
+      '';
+    };
+    init-deps = {
+      exec = ''
+        pip install ${initial-requirements}
       '';
     };
   };
 
   enterShell = ''
     if [ ! -d workspace ]; then
-      workspace-init
+      init-workspace
+      init-deps
     fi
     # set CPM_SOURCE_CACHE using the xdgappdirs python package if not set
     if [ -z ''${CPM_SOURCE_CACHE} ]; then

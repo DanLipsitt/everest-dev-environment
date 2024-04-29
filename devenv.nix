@@ -35,7 +35,7 @@ in {
       exec = ''
         pip install -e ./dependency_manager
         edm init --workspace workspace
-        mkdir workspace/build || true
+        mkdir workspace/everest-core/build || true
       '';
     };
     init-deps = {
@@ -45,7 +45,7 @@ in {
     };
     build = {
       exec = ''
-        cd workspace/build
+        cd workspace/everest-core/build
         cmake ..
         make install
       '';

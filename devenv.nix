@@ -53,15 +53,14 @@ in {
   };
 
   enterShell = ''
+    # set CPM_SOURCE_CACHE using the xdgappdirs python package if not set
+    if [ -z ''${CPM_SOURCE_CACHE} ]; then
+      export CPM_SOURCE_CACHE=$(python -c 'import xdgappdirs; print(xdgappdirs.user_cache_dir("cpm_source_cache"))')
+    fi
     if [ ! -d workspace ]; then
       init-workspace
       init-deps
     fi
-    # set CPM_SOURCE_CACHE using the xdgappdirs python package if not set
-    if [ -z ''${CPM_SOURCE_CACHE} ]; then
-      CPM_SOURCE_CACHE=$(python -c 'import xdgappdirs; print(xdgappdirs.user_cache_dir("cpm_source_cache"))')
-    fi
-    export CPM_SOURCE_CACHE
   '';
 
   # https://devenv.sh/tests/

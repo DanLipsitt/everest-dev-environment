@@ -82,7 +82,10 @@ in {
     };
   };
   languages.cplusplus.enable = true;
-  languages.javascript.enable = true;
+  languages.javascript = {
+    enable = true;
+    npm.enable = true;
+  };
   languages.java = {
     enable = true;
     jdk.package = pkgs.openjdk;
